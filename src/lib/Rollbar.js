@@ -26,21 +26,20 @@ exports.execRQL = async (driver, project_id, rql) => {
     (await driver.findElement(By.xpath('//*[@id="AccountRQLConsole"]/div/div[2]/div[2]/div[2]/div/form/input'))).click();
 
     // Note: Get RQL result
-    while(url === await driver.getCurrentUrl()) {
+    while (url === await driver.getCurrentUrl()) {
         await driver.wait(() => waitTimeMilliseconds(1000), 20000);
     }
     let tableRows = undefined
-    while(tableRows === undefined) {
+    while (tableRows === undefined) {
         let status = undefined;
         try {
             status = await (await driver.findElement(By.xpath('//*[@id="AccountRQLConsole"]/div/div[2]/div[2]/div[3]/div/strong'))).getText();
             tableRows = await (await driver.findElement(By.tagName('table'))).getText()
-        } catch(error) {
+        } catch (error) {
             try {
-                if (status === 'Completed'){
+                if (status === 'Completed') {
                     tableRows = "rows\n0\n0"
-                }
-                else{
+                } else {
                     await driver.wait(() => waitTimeMilliseconds(1000), 20000);
                 }
             } catch (suberror) {
@@ -50,7 +49,7 @@ exports.execRQL = async (driver, project_id, rql) => {
     }
     title = await (await driver.findElement(By.id('intercom-tour-projects'))).getText()
     return {
-        title,
+        title: title.split("\n")[1],
         rows: tableRows.split("\n"),
     }
 };
