@@ -3,6 +3,7 @@
 ```bash
 docker clone https://github.com/SeleniumHQ/selenium.git
 ./bin/run-selenium-server.sh
+npm install
 ```
 
 2. Set Environment
@@ -20,5 +21,5 @@ SLACK_WEB_HOOK=[Specify SlackWebHookURL to detect Slack]
 ## Usage
 
 ```bash
-node ./src/rollbar.js
+node ./src/total_errors.js
 ```
