@@ -1,4 +1,12 @@
 require('dotenv').config()
+const { IncomingWebhook } = require('@slack/webhook');
+
+let webhook = undefined;
+let webhookUrl = process.env.SLACK_WEB_HOOK
+if (webhookUrl) {
+    webhook = new IncomingWebhook(webhookUrl);
+}
+
 const {Builder, Capabilities, By} = require("selenium-webdriver");
 
 const capabilities = Capabilities.chrome();
@@ -63,7 +71,13 @@ const documentInitialised = (waitMsec) => {
                 }
                 title = await (await driver.findElement(By.id('intercom-tour-projects'))).getText()
                 rows = tableRows.split("\n")
-                console.log(`${title.split("\n")[1]},${qt.name},${rows[1]},${rows[2]}`);
+                text = `${title.split("\n")[1]},${qt.name},${rows[1]},${rows[2]}`
+                console.log(text);
+                if (webhook) {
+                    await webhook.send({
+                        text: text,
+                    });
+                }
             }
         }
     } finally {
