@@ -16,7 +16,9 @@ exports.executor = async (query_types, createRQL, createText) => {
 
         project_ids = process.env.PROJECT_IDS.split(",")
         results = []
+        let i = 0;
         for (project_id of project_ids) {
+            console.error(`START(${i + 1}/${project_ids.length}): ${project_id}`)
             for (qt of query_types) {
                 const rql = createRQL(project_id, qt)
                 results.push({
@@ -25,6 +27,8 @@ exports.executor = async (query_types, createRQL, createText) => {
                 })
             }
         }
+        console.error('END')
+        console.error('---------------------')
         text = createText(results)
         console.log(text);
         if (webhook) {
