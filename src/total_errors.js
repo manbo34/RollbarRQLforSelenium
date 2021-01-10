@@ -10,7 +10,7 @@ const {executor} = require("./lib/executor.js");
         , (_project_id, qt) => `
             SELECT count(item.counter), count_distinct(item.counter) 
             FROM item_occurrence 
-            WHERE ${qt.t} > unix_timestamp() - 60 * 60 * 24 * 7 
+            WHERE ${qt.t} > unix_timestamp() - 60 * 60 * 24 * ${days} 
                 and item.environment = "production" 
                 and item.level >= 40`
         , results => {

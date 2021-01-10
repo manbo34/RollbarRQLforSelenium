@@ -7,10 +7,10 @@ const {executor} = require("./lib/executor.js");
     ]
 
     await executor(query_types
-        , (_project_id, qt) => `
+        , (_project_id, qt, days) => `
             SELECT item.counter, item.title, count(item.counter)
             FROM item_occurrence
-            WHERE ${qt.t} > unix_timestamp() - 60 * 60 * 24 * 7
+            WHERE ${qt.t} > unix_timestamp() - 60 * 60 * 24 * ${days}
             and item.environment = "production"
             and item.level >= 40
             group by item.counter

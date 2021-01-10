@@ -20,7 +20,7 @@ exports.executor = async (query_types, createRQL, createText) => {
         for (project_id of project_ids) {
             console.error(`START(${i + 1}/${project_ids.length}): ${project_id}`)
             for (qt of query_types) {
-                const rql = createRQL(project_id, qt)
+                const rql = createRQL(project_id, qt, process.env.DAYS)
                 results.push({
                     result: await execRQL(driver, project_id, rql),
                     query_type: qt
