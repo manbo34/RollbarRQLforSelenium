@@ -15,7 +15,7 @@ const {executor} = require("./lib/executor.js");
                 and item.level >= 40`
         , results => {
             buffers = [];
-            buffers.push('project,num,unique_num')
+            buffers.push('project,timestamp_type,num,unique_num')
             results.forEach(r => {
                 title = r.result.title
                 rows = r.result.rows

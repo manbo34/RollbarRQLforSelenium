@@ -26,6 +26,7 @@ exports.executor = async (query_types, createRQL, createText) => {
                     query_type: qt
                 })
             }
+            i++
         }
         console.error('END')
         console.error('---------------------')
